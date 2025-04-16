@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candy Rain - Candy Rain Game</title>
+    <link rel='icon' href='/src/icons/logo.png' type='image/x-icon'>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #f28500 0%, #005100 100%);
+            padding: 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 60px;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+            border-radius: 15px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            color: white;
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 1.5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 300;
+            padding: 10px 15px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav ul li a:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover:before {
+            width: 100%;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .download-btn {
+            background-color: white;
+            color: #f28500;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            background-color: #f8f8f8;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 120px;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-container {
+            background-color: white;
+            border-radius: 20px;
+            padding: 60px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-container h2 {
+            font-size: 48px;
+            font-weight: 300;
+            color: #005100;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-container p {
+            font-size: 24px;
+            font-weight: 300;
+            color: #555;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        .hero-btn {
+            background: linear-gradient(135deg, #f28500 0%, #ff9c26 100%);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 40px;
+            font-size: 20px;
+            text-decoration: none;
+            font-weight: 300;
+            letter-spacing: 1px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(242, 133, 0, 0.3);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(242, 133, 0, 0.4);
+        }
+
+        .hero-img {
+            margin-top: 50px;
+            position: relative;
+        }
+
+        .hero-img img {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            opacity: 0;
+            animation: sparkle 4s infinite;
+        }
+
+        .sparkle:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .sparkle:nth-child(2) {
+            top: 20%;
+            right: 15%;
+            animation-delay: 1s;
+        }
+
+        .sparkle:nth-child(3) {
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 2s;
+        }
+
+        @keyframes sparkle {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Game Features Section */
+        .features {
+            padding: 100px 0;
+        }
+
+        .features-container {
+            background-color: #005100;
+            border-radius: 20px;
+            padding: 60px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .features-container h2 {
+            font-size: 42px;
+            font-weight: 300;
+            margin-bottom: 50px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            position: relative;
+            display: inline-block;
+        }
+
+        .features-container h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: #f28500;
+            border-radius: 3px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-card:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .feature-card:hover:before {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #f28500;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            font-weight: 300;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* Gameplay Section */
+        .gameplay {
+            padding: 100px 0;
+        }
+
+        .gameplay-container {
+            background-color: white;
+            border-radius: 20px;
+            padding: 60px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .gameplay-container h2 {
+            font-size: 42px;
+            font-weight: 300;
+            color: #005100;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .gameplay-container p {
+            font-size: 20px;
+            font-weight: 300;
+            color: #555;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        .gameplay-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            padding: 30px 20px;
+            background-color: rgba(242, 133, 0, 0.05);
+            border-radius: 20px;
+            margin: 0 10px 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(242, 133, 0, 0.1);
+            position: relative;
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            background-color: rgba(242, 133, 0, 0.1);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background-color: #f28500;
+            color: white;
+            font-size: 24px;
+            line-height: 50px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .step h3 {
+            font-size: 22px;
+            font-weight: 300;
+            color: #f28500;
+            margin-bottom: 15px;
+        }
+
+        .step p {
+            font-size: 16px;
+            margin-bottom: 0;
+        }
+
+        /* Screenshots Gallery */
+        .gallery {
+            padding: 100px 0;
+        }
+
+        .gallery-container {
+            background-color: #f28500;
+            border-radius: 20px;
+            padding: 60px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            color: white;
+        }
+
+        .gallery-container h2 {
+            font-size: 42px;
+            font-weight: 300;
+            margin-bottom: 50px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .screenshots {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .screenshot {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+
+            padding-bottom: 42rem;
+            /* 16:9 Aspect Ratio */
+        }
+
+        .screenshot:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            border-color: white;
+        }
+
+        .screenshot img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Genres Section */
+        .genres {
+            padding: 100px 0;
+        }
+
+        .genres-container {
+            background-color: white;
+            border-radius: 20px;
+            padding: 60px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .genres-container h2 {
+            font-size: 42px;
+            font-weight: 300;
+            color: #005100;
+            margin-bottom: 50px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .genre-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .tag {
+            background: linear-gradient(135deg, #005100 0%, #007500 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 300;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 81, 0, 0.2);
+        }
+
+        .tag:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 81, 0, 0.3);
+        }
+
+        .extra-info {
+            margin-top: 60px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .info-card {
+            background-color: rgba(242, 133, 0, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            min-width: 250px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(242, 133, 0, 0.1);
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .info-card h3 {
+            font-size: 24px;
+            font-weight: 300;
+            color: #f28500;
+            margin-bottom: 10px;
+        }
+
+        .info-card p {
+            font-size: 28px;
+            font-weight: 300;
+            color: #555;
+        }
+
+        /* Community Section */
+        .community {
+            padding: 100px 0;
+        }
+
+        .community-container {
+            background-color: #005100;
+            border-radius: 20px;
+            padding: 60px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            color: white;
+        }
+
+        .community-container h2 {
+            font-size: 42px;
+            font-weight: 300;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .community-container p {
+            font-size: 20px;
+            font-weight: 300;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+            margin-bottom: 40px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .social-link {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-link:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .social-link:hover:before {
+            opacity: 1;
+            transform: scale(1.5);
+        }
+
+        .social-icon {
+            font-size: 32px;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            padding: 50px 0;
+            background-color: #f8f8f8;
+        }
+
+        .footer-container {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #555;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 300;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .footer-link:after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: #f28500;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: #f28500;
+        }
+
+        .footer-link:hover:after {
+            width: 100%;
+        }
+
+        .copyright {
+            color: #777;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .screenshots {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-container,
+            .features-container,
+            .gameplay-container,
+            .gallery-container,
+            .genres-container,
+            .community-container,
+            .footer-container {
+                padding: 40px 20px;
+            }
+
+            .hero-container h2,
+            .features-container h2,
+            .gameplay-container h2,
+            .gallery-container h2,
+            .genres-container h2,
+            .community-container h2 {
+                font-size: 32px;
+            }
+
+            .hero-container p,
+            .gameplay-container p,
+            .community-container p {
+                font-size: 18px;
+            }
+
+            .hero {
+                margin-top: 180px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .screenshots {
+                grid-template-columns: 1fr;
+            }
+
+            .social-links {
+                gap: 15px;
+            }
+
+            .social-link {
+                width: 50px;
+                height: 50px;
+            }
+
+            .social-icon {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 24px;
+            }
+
+            .logo img {
+                height: 40px;
+            }
+
+            nav ul {
+                gap: 10px;
+            }
+
+            nav ul li a {
+                font-size: 16px;
+                padding: 8px 12px;
+            }
+
+            .download-btn {
+                padding: 10px 20px;
+                font-size: 16px;
+            }
+
+            .hero-btn {
+                padding: 12px 30px;
+                font-size: 18px;
+            }
+
+            .step {
+                min-width: 100%;
+                margin: 0 0 20px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container header-container">
+            <a href="/" class="logo">
+                <img src="/src/icons/logo.png" alt="Candy Rain Logo">
+                <h1>Candy Rain</h1>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#gameplay">How to Play</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#community">Community</a></li>
+                    <li><a href="https://play.google.com/store/apps/details?id=com.kungapp.candyrain.offline&pcampaignid=web_share" target="_blank" class="download-btn">Download</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-container">
+            <h2>Match Delicious Candies in this Sweet Adventure!</h2>
+            <p>Join the Candy Rain adventure and match jewels, collect bombs, and complete hundreds of challenging levels in this addictive match-3 puzzle game.</p>
+            <a href="https://play.google.com/store/apps/details?id=com.kungapp.candyrain.offline&pcampaignid=web_share" target="_blank" class="hero-btn">Play Now</a>
+            <div class="hero-img">
+                <img src="/src/img/hero.png" alt="Candy Rain Gameplay">
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Features Section -->
+    <section class="features" id="features">
+        <div class="container features-container">
+            <h2>Game Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3>Hundreds of Levels</h3>
+                    <p>Explore a vast world map with over 100 challenging and fun levels to complete at your own pace.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💥</div>
+                    <h3>Power-Ups & Combos</h3>
+                    <p>Create powerful line bombs and color bombs by matching 4 or 5 candies in a row for explosive chain reactions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Collect Stars</h3>
+                    <p>Earn up to three stars per level and unlock treasure chests scattered throughout the map.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Replay Levels</h3>
+                    <p>Return to any completed level to improve your score and collect all the stars you missed the first time.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Various Objectives</h3>
+                    <p>Different level goals keep the gameplay fresh - collect specific candies, clear chocolate tiles, and more!</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Play Offline</h3>
+                    <p>No internet connection needed! Enjoy Candy Rain anytime, anywhere on your mobile device.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gameplay Section -->
+    <section class="gameplay" id="gameplay">
+        <div class="container gameplay-container">
+            <h2>How to Play</h2>
+            <p>Candy Rain is an easy-to-learn but challenging-to-master puzzle game. Follow these simple steps to start your sweet adventure!</p>
+            <div class="gameplay-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Swap Candies</h3>
+                    <p>Switch any two adjacent candies to create a match of 3 or more identical candies in a row or column.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Complete Objectives</h3>
+                    <p>Check the cookie panel on the left to see your current level goals and remaining moves.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Create Power-Ups</h3>
+                    <p>Match 4 or 5 candies to create special bombs that clear multiple candies with a single move.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Earn Stars</h3>
+                    <p>Score high points to earn stars and unlock treasure chests on the level map.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Gallery -->
+    <section class="gallery" id="gallery">
+        <div class="container gallery-container">
+            <h2>Game Gallery</h2>
+            <div class="screenshots">
+                <div class="screenshot">
+                    <img src="/src/img/screen1.png" alt="Candy Rain Screenshot 1">
+                </div>
+                <div class="screenshot">
+                    <img src="/src/img/screen2.png" alt="Candy Rain Screenshot 2">
+                </div>
+                <div class="screenshot">
+                    <img src="/src/img/screen3.png" alt="Candy Rain Screenshot 3">
+                </div>
+                <div class="screenshot">
+                    <img src="/src/img/screen4.png" alt="Candy Rain Screenshot 4">
+                </div>
+                <div class="screenshot">
+                    <img src="/src/img/screen5.png" alt="Candy Rain Screenshot 5">
+                </div>
+                <div class="screenshot">
+                    <img src="/src/img/screen6.png" alt="Candy Rain Screenshot 6">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Genres Section -->
+    <section class="genres">
+        <div class="container genres-container">
+            <h2>Game Details</h2>
+            <div class="genre-tags">
+                <div class="tag">Puzzle</div>
+                <div class="tag">Match-3</div>
+                <div class="tag">Casual</div>
+                <div class="tag">Single Player</div>
+                <div class="tag">Stylized</div>
+                <div class="tag">Offline</div>
+            </div>
+            <div class="extra-info">
+                <div class="info-card">
+                    <h3>Downloads</h3>
+                    <p>10,000+</p>
+                </div>
+                <div class="info-card">
+                    <h3>Age Rating</h3>
+                    <p>3+</p>
+                </div>
+                <div class="info-card">
+                    <h3>File Size</h3>
+                    <p>45 MB</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section class="community" id="community">
+        <div class="container community-container">
+            <h2>Join Our Sweet Community</h2>
+            <p>Connect with other Candy Rain players around the world! Share tips, ask for help with challenging levels, and be the first to know about new updates and features.</p>
+            <a href="https://play.google.com/store/apps/details?id=com.kungapp.candyrain.offline&pcampaignid=web_share" target="_blank" class="hero-btn">Join Now</a>
+            <div class="social-links">
+                <div class="social-link">
+                    <span class="social-icon">📱</span>
+                </div>
+                <div class="social-link">
+                    <span class="social-icon">💬</span>
+                </div>
+                <div class="social-link">
+                    <span class="social-icon">📷</span>
+                </div>
+                <div class="social-link">
+                    <span class="social-icon">🎮</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container gameplay-container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="gameplay-steps">
+                <div class="step">
+                    <h3>Is Candy Rain free to play?</h3>
+                    <p>Yes! Candy Rain is completely free to download and play. Optional in-app purchases are available but not required to enjoy the game.</p>
+                </div>
+                <div class="step">
+                    <h3>Do I need internet to play?</h3>
+                    <p>No, Candy Rain works perfectly offline. You can enjoy playing anytime, anywhere, even without an internet connection!</p>
+                </div>
+                <div class="step">
+                    <h3>How often are new levels added?</h3>
+                    <p>We regularly update the game with new levels, features, and seasonal events. Make sure to keep your game updated for the best experience.</p>
+                </div>
+                <div class="step">
+                    <h3>Can I sync my progress across devices?</h3>
+                    <p>Yes! By connecting to your account, your game progress will be saved and can be synchronized across multiple devices.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container features-container">
+            <h2>What Players Say</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⭐⭐⭐⭐⭐</div>
+                    <p>"I'm absolutely addicted to this game! The levels are challenging but not impossible, and the colorful design is so charming. Perfect for quick gaming sessions!"</p>
+                    <h3>- Sarah M.</h3>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐⭐⭐⭐⭐</div>
+                    <p>"This is by far the best match-3 game I've played. Love the power-ups and special candies. I play it every day on my commute to work!"</p>
+                    <h3>- Michael T.</h3>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐⭐⭐⭐⭐</div>
+                    <p>"My kids and I both enjoy Candy Rain. It's colorful, fun, and suitable for all ages. The difficulty progression is perfect!"</p>
+                    <h3>- Lisa J.</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="cta">
+        <div class="container gallery-container">
+            <h2>Ready for a Sweet Adventure?</h2>
+            <p>Download Candy Rain now and start your puzzle journey! Match candies, create awesome combos, and conquer hundreds of challenging levels.</p>
+            <a href="https://play.google.com/store/apps/details?id=com.kungapp.candyrain.offline&pcampaignid=web_share" target="_blank" class="hero-btn">Download Now</a>
+            <div class="extra-info" style="margin-top: 50px;">
+                <div class="info-card" style="background-color: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2);">
+                    <h3 style="color: white;">Available On</h3>
+                    <p style="color: white;">iOS & Android</p>
+                </div>
+                <div class="info-card" style="background-color: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2);">
+                    <h3 style="color: white;">Languages</h3>
+                    <p style="color: white;">15+ Supported</p>
+                </div>
+                <div class="info-card" style="background-color: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2);">
+                    <h3 style="color: white;">Updates</h3>
+                    <p style="color: white;">Monthly</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-links">
+                <a href="/Policy356/" class="footer-link">Privacy Policy</a>
+                <a href="/Service347/" class="footer-link">Terms of Service</a>
+                <a href="/Cookie992/" class="footer-link">Cookie Policy</a>
+
+            </div>
+            <p class="copyright">© 2025 Candy Rain. All Rights Reserved. Candy Rain is a trademark of Candy Rain Games.</p>
+        </div>
+    </footer>
+
+
+    <?php include 'cookie-consent.php'; ?>
+</body>
+
+</html>

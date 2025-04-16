@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candy Rain - Candy Rain Game</title>
+    <link rel='icon' href='/src/icons/logo.png' type='image/x-icon'>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #f28500 0%, #005100 100%);
+            padding: 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 60px;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+            border-radius: 15px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            color: white;
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 1.5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 300;
+            padding: 10px 15px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav ul li a:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover:before {
+            width: 100%;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .download-btn {
+            background-color: white;
+            color: #f28500;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            background-color: #f8f8f8;
+        }
+
+
+        /* Footer */
+        footer {
+            padding: 50px 0;
+            background-color: #f8f8f8;
+        }
+
+        .footer-container {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #555;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 300;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .footer-link:after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: #f28500;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: #f28500;
+        }
+
+        .footer-link:hover:after {
+            width: 100%;
+        }
+
+        .copyright {
+            color: #777;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .screenshots {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-container,
+            .features-container,
+            .gameplay-container,
+            .gallery-container,
+            .genres-container,
+            .community-container,
+            .footer-container {
+                padding: 40px 20px;
+            }
+
+            .hero-container h2,
+            .features-container h2,
+            .gameplay-container h2,
+            .gallery-container h2,
+            .genres-container h2,
+            .community-container h2 {
+                font-size: 32px;
+            }
+
+            .hero-container p,
+            .gameplay-container p,
+            .community-container p {
+                font-size: 18px;
+            }
+
+            .hero {
+                margin-top: 180px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .screenshots {
+                grid-template-columns: 1fr;
+            }
+
+            .social-links {
+                gap: 15px;
+            }
+
+            .social-link {
+                width: 50px;
+                height: 50px;
+            }
+
+            .social-icon {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 24px;
+            }
+
+            .logo img {
+                height: 40px;
+            }
+
+            nav ul {
+                gap: 10px;
+            }
+
+            nav ul li a {
+                font-size: 16px;
+                padding: 8px 12px;
+            }
+
+            .download-btn {
+                padding: 10px 20px;
+                font-size: 16px;
+            }
+
+            .hero-btn {
+                padding: 12px 30px;
+                font-size: 18px;
+            }
+
+            .step {
+                min-width: 100%;
+                margin: 0 0 20px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+
+
+        .privacy-page {
+            background-color: #ffffff;
+            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 120px auto 50px;
+            /* Account for fixed header */
+            padding: 0 20px;
+        }
+
+        .privacy-section {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .privacy-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .privacy-header {
+            background-color: #005100;
+            color: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 81, 0, 0.2);
+        }
+
+        .privacy-header h1 {
+            font-size: 48px;
+            font-weight: 300;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .privacy-header p {
+            font-size: 20px;
+            font-weight: 300;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 300;
+            color: #005100;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background-color: #f28500;
+            border-radius: 3px;
+        }
+
+        .privacy-section p {
+            font-size: 18px;
+            font-weight: 300;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .privacy-section a {
+            color: #f28500;
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .privacy-section a:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: #f28500;
+            transition: all 0.3s ease;
+        }
+
+        .privacy-section a:hover {
+            color: #005100;
+        }
+
+        .privacy-section a:hover:after {
+            width: 100%;
+            background-color: #005100;
+        }
+
+        .privacy-section ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .privacy-section ul li {
+            font-size: 18px;
+            font-weight: 300;
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .contact-box {
+            background: linear-gradient(135deg, #f28500 0%, #ff9c26 100%);
+            border-radius: 15px;
+            padding: 30px;
+            color: white;
+            margin: 30px 0;
+            box-shadow: 0 10px 25px rgba(242, 133, 0, 0.2);
+        }
+
+        .contact-box p {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 0;
+        }
+
+        .highlight-block {
+            border-left: 4px solid #f28500;
+            padding-left: 20px;
+            margin: 25px 0;
+            background: rgba(242, 133, 0, 0.05);
+            padding: 20px 20px 20px 25px;
+            border-radius: 0 15px 15px 0;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .privacy-header h1 {
+                font-size: 36px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .privacy-section p,
+            .privacy-section ul li,
+            .contact-box p {
+                font-size: 16px;
+            }
+
+            .privacy-section,
+            .privacy-header {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container header-container">
+            <a href="/" class="logo">
+                <img src="/src/icons/logo.png" alt="Candy Rain Logo">
+                <h1>Candy Rain</h1>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="/#features">Features</a></li>
+                    <li><a href="/#gameplay">How to Play</a></li>
+                    <li><a href="/#gallery">Gallery</a></li>
+                    <li><a href="/#community">Community</a></li>
+                    <li><a href="https://play.google.com/store/apps/details?id=com.kungapp.candyrain.offline&pcampaignid=web_share" target="_blank" class="download-btn">Download</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="privacy-page">
+        <!-- Header Section -->
+        <div class="privacy-header">
+            <h1>Privacy Policy</h1>
+            <p>At Candy Rain, we value your privacy and are committed to maintaining the trust and confidence of our visitors and users. This Privacy Policy explains how we collect, use, and protect your information.</p>
+        </div>
+
+        <!-- Introduction Section -->
+        <div class="privacy-section">
+            <h2 class="section-title">Introduction</h2>
+            <p>At Candy Rain, accessible from https://candyrain-play.com/, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that are collected and recorded by Candy Rain and how we use it.</p>
+            <div class="contact-box">
+                <p>If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us.</p>
+            </div>
+        </div>
+
+        <!-- Log Files Section -->
+        <div class="privacy-section">
+            <h2 class="section-title">Log Files</h2>
+            <p>Candy Rain follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and are a part of hosting services' analytics. The information collected by log files includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks.</p>
+
+            <div class="highlight-block">
+                <p>These are not linked to any personally identifiable information. The purpose of the information is to analyze trends, administer the site, track users' movement on the website, and gather demographic information.</p>
+            </div>
+
+            <p>Our Privacy Policy was created with the help of the Privacy Policy Generator.</p>
+        </div>
+        <!-- Cookies Section -->
+        <div class="privacy-section">
+            <h2 class="section-title">Cookies and Web Beacons</h2>
+            <p>Like any other website, Candy Rain uses "cookies." These cookies are used to store information, including visitors' preferences and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.</p>
+            <p>For more general information on cookies, please read the "Cookies" article from the Privacy Policy Generator.</p>
+        </div>
+
+        <!-- Google DART Cookie Section -->
+        <div class="privacy-section">
+            <h2 class="section-title">Google DoubleClick DART Cookie</h2>
+            <p>Google is one of the third-party vendors on our site. It also uses cookies, known as DART cookies, to serve ads to our site visitors based on their visit to https://candyrain-play.com/ and other sites on the internet. However, visitors may choose to decline the use of DART cookies by visiting the Google ad and content network Privacy Policy at the following URL – <a href="https://policies.google.com/technologies/ads" target="_blank">https://policies.google.com/technologies/ads</a>.</p>
+        </div>
+
+        <!-- Advertising Partners Section -->
+        <div class="privacy-section">
+            <h2 class="section-title">Our Advertising Partners</h2>
+            <p>Some of the advertisers on our site may use cookies and web beacons. Our advertising partners are listed below. Each of our advertising partners has its own Privacy Policy for their policies on user data. For easier access, we hyperlinked to their Privacy Policies below.</p>
+
+            <ul>
+                <li>
+                    <strong>Google</strong>:
+                    <a href="https://policies.google.com/technologies/ads" target="_blank">https://policies.google.com/technologies/ads</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Privacy Policies Section -->
+        <div class="privacy-section">
+            <h2 class="section-title">Privacy Policies</h2>
+            <p>You may consult this list to find the Privacy Policy for each of the advertising partners of Candy Rain.</p>
+            <p>Third-party ad servers or ad networks use technologies like cookies, JavaScript, or Web Beacons in their respective advertisements and links that appear on Candy Rain, which are sent directly to users' browsers. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or personalize the advertising content you see on websites you visit.</p>
+            <div class="highlight-block">
+                <p>Note that Candy Rain has no access to or control over these cookies that are used by third-party advertisers.</p>
+            </div>
+        </div>
+        <!-- Third-Party Privacy Policies Section -->
+        <div class="privacy-section">
+            <h2 class="section-title">Third-Party Privacy Policies</h2>
+            <p>Candy Rain's Privacy Policy does not apply to other advertisers or websites. Thus, we advise you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. They may include their practices and instructions on how to opt out of certain options.</p>
+            <p>You can choose to disable cookies through your browser options. More detailed information about cookie management with specific web browsers can be found on the browsers' respective websites.</p>
+        </div>
+
+        <!-- Children's Information Section -->
+        <div class="privacy-section">
+            <h2 class="section-title">Children's Information</h2>
+            <p>Another part of our priority is adding protection for children while using the internet. We encourage parents and guardians to observe, participate in, and/or monitor and guide their online activity.</p>
+
+            <div class="highlight-block">
+                <p>Candy Rain does not knowingly collect any personally identifiable information from children under the age of 13. If you believe your child provided this kind of information on our website, we strongly encourage you to contact us immediately, and we will do our best to promptly remove such information from our records.</p>
+            </div>
+        </div>
+
+        <!-- Online Privacy Policy Section -->
+        <div class="privacy-section">
+            <h2 class="section-title">Online Privacy Policy Only</h2>
+            <p>This Privacy Policy applies only to our online activities and is valid for visitors to our website regarding the information they share and/or collect in Candy Rain. This policy does not apply to any information collected offline or via channels other than this website.</p>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="privacy-section">
+            <h2 class="section-title">Contact Us</h2>
+            <p>If you have any questions about this Privacy Policy, please don't hesitate to reach out to us.</p>
+
+            <div class="contact-box">
+                <p>For privacy-related inquiries or concerns, you can contact our Privacy Officer by email at: <strong>privacy@candyrain-play.com</strong></p>
+            </div>
+
+            <p>We strive to promptly address all privacy concerns and will respond to your inquiry as soon as possible.</p>
+        </div>
+
+        <!-- Last Updated Section -->
+        <div class="privacy-section">
+            <h2 class="section-title">Changes to This Privacy Policy</h2>
+            <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.</p>
+            <p>You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
+
+            <div class="highlight-block">
+                <p><strong>Last Updated:</strong> March 15, 2025</p>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-links">
+                <a href="/Policy356/" class="footer-link">Privacy Policy</a>
+                <a href="/Service347/" class="footer-link">Terms of Service</a>
+                <a href="/Cookie992/" class="footer-link">Cookie Policy</a>
+
+            </div>
+            <p class="copyright">© 2025 Candy Rain. All Rights Reserved. Candy Rain is a trademark of Candy Rain Games.</p>
+        </div>
+    </footer>
+
+
+    <?php include '../cookie-consent.php'; ?>
+</body>
+
+</html>

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candy Rain - Candy Rain Game</title>
+    <link rel='icon' href='/src/icons/logo.png' type='image/x-icon'>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #f28500 0%, #005100 100%);
+            padding: 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 60px;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+            border-radius: 15px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            color: white;
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 1.5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 300;
+            padding: 10px 15px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav ul li a:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover:before {
+            width: 100%;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .download-btn {
+            background-color: white;
+            color: #f28500;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            background-color: #f8f8f8;
+        }
+
+
+        /* Footer */
+        footer {
+            padding: 50px 0;
+            background-color: #f8f8f8;
+        }
+
+        .footer-container {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #555;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 300;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .footer-link:after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: #f28500;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: #f28500;
+        }
+
+        .footer-link:hover:after {
+            width: 100%;
+        }
+
+        .copyright {
+            color: #777;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .screenshots {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-container,
+            .features-container,
+            .gameplay-container,
+            .gallery-container,
+            .genres-container,
+            .community-container,
+            .footer-container {
+                padding: 40px 20px;
+            }
+
+            .hero-container h2,
+            .features-container h2,
+            .gameplay-container h2,
+            .gallery-container h2,
+            .genres-container h2,
+            .community-container h2 {
+                font-size: 32px;
+            }
+
+            .hero-container p,
+            .gameplay-container p,
+            .community-container p {
+                font-size: 18px;
+            }
+
+            .hero {
+                margin-top: 180px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .screenshots {
+                grid-template-columns: 1fr;
+            }
+
+            .social-links {
+                gap: 15px;
+            }
+
+            .social-link {
+                width: 50px;
+                height: 50px;
+            }
+
+            .social-icon {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 24px;
+            }
+
+            .logo img {
+                height: 40px;
+            }
+
+            nav ul {
+                gap: 10px;
+            }
+
+            nav ul li a {
+                font-size: 16px;
+                padding: 8px 12px;
+            }
+
+            .download-btn {
+                padding: 10px 20px;
+                font-size: 16px;
+            }
+
+            .hero-btn {
+                padding: 12px 30px;
+                font-size: 18px;
+            }
+
+            .step {
+                min-width: 100%;
+                margin: 0 0 20px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        .terms-page {
+            background-color: #ffffff;
+            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 120px auto 50px;
+            /* Account for fixed header */
+            padding: 0 20px;
+        }
+
+        .terms-section {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .terms-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .terms-header {
+            background: linear-gradient(135deg, #f28500 0%, #ff9c26 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(242, 133, 0, 0.2);
+        }
+
+        .terms-header h1 {
+            font-size: 48px;
+            font-weight: 300;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .terms-header p {
+            font-size: 20px;
+            font-weight: 300;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 300;
+            color: #005100;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background-color: #f28500;
+            border-radius: 3px;
+        }
+
+        .terms-section p {
+            font-size: 18px;
+            font-weight: 300;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .terms-section a {
+            color: #f28500;
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .terms-section a:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: #f28500;
+            transition: all 0.3s ease;
+        }
+
+        .terms-section a:hover {
+            color: #005100;
+        }
+
+        .terms-section a:hover:after {
+            width: 100%;
+            background-color: #005100;
+        }
+
+        .terms-section ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .terms-section ul li {
+            font-size: 18px;
+            font-weight: 300;
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .terms-box {
+            background-color: rgba(0, 81, 0, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            color: #005100;
+            margin: 30px 0;
+            border-left: 4px solid #005100;
+        }
+
+        .terms-box p {
+            color: #005100;
+            font-size: 18px;
+            margin-bottom: 0;
+        }
+
+        .highlight-block {
+            border-left: 4px solid #f28500;
+            padding-left: 20px;
+            margin: 25px 0;
+            background: rgba(242, 133, 0, 0.05);
+            padding: 20px 20px 20px 25px;
+            border-radius: 0 15px 15px 0;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .terms-header h1 {
+                font-size: 36px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .terms-section p,
+            .terms-section ul li,
+            .terms-box p {
+                font-size: 16px;
+            }
+
+            .terms-section,
+            .terms-header {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container header-container">
+            <a href="/" class="logo">
+                <img src="/src/icons/logo.png" alt="Candy Rain Logo">
+                <h1>Candy Rain</h1>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="/#features">Features</a></li>
+                    <li><a href="/#gameplay">How to Play</a></li>
+                    <li><a href="/#gallery">Gallery</a></li>
+                    <li><a href="/#community">Community</a></li>
+                    <li><a href="https://play.google.com/store/apps/details?id=com.kungapp.candyrain.offline&pcampaignid=web_share" target="_blank" class="download-btn">Download</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="terms-page">
+        <!-- Header Section -->
+        <div class="terms-header">
+            <h1>Terms and Conditions</h1>
+            <p>Please read these terms and conditions carefully before using our services. By using Candy Rain, you agree to be bound by these terms.</p>
+        </div>
+
+        <!-- Introduction Section -->
+        <div class="terms-section">
+            <h2 class="section-title">Welcome to Candy Rain!</h2>
+            <p>These terms and conditions outline the rules and regulations for the use of Candy Rain's Website, located at https://candyrain-play.com/.</p>
+            <p>By accessing this website, we assume you accept these terms and conditions. Do not continue to use Candy Rain if you do not agree to take all of the terms and conditions stated on this page.</p>
+        </div>
+
+        <!-- Terminology Section -->
+        <div class="terms-section">
+            <h2 class="section-title">Terminology</h2>
+            <div class="highlight-block">
+                <p>The following terminology applies to these Terms and Conditions, Privacy Statement, and Disclaimer Notice and all Agreements: "Client," "You," and "Your" refers to you, the person logging on this website and compliant to the Company's terms and conditions. "The Company," "Ourselves," "We," "Our," and "Us," refers to our Company. "Party," "Parties," or "Us," refers to both the Client and ourselves.</p>
+            </div>
+            <p>All terms refer to the offer, acceptance, and consideration of payment necessary to undertake the process of our assistance to the Client in the most appropriate manner for the express purpose of meeting the Client's needs in respect of the Company's stated services, in accordance with and subject to, prevailing law of the Netherlands. Any use of the above terminology or other words in the singular, plural, capitalization, and/or he/she or they, are taken as interchangeable and therefore as referring to the same.</p>
+        </div>
+        <!-- Cookies Section -->
+        <div class="terms-section">
+            <h2 class="section-title">Cookies</h2>
+            <p>We employ the use of cookies. By accessing Candy Rain, you agreed to use cookies in agreement with Candy Rain's Privacy Policy.</p>
+            <p>Most interactive websites use cookies to let us retrieve the user's details for each visit. Cookies are used by our website to enable the functionality of certain areas to make it easier for people visiting our website. Some of our affiliate/advertising partners may also use cookies.</p>
+            <div class="terms-box">
+                <p>You can review our detailed Cookie Policy to learn more about how we use cookies and how you can manage your cookie preferences.</p>
+            </div>
+        </div>
+
+        <!-- License Section -->
+        <div class="terms-section">
+            <h2 class="section-title">License</h2>
+            <p>Unless otherwise stated, Candy Rain and/or its licensors own the intellectual property rights for all material on Candy Rain. All intellectual property rights are reserved. You may access this from Candy Rain for your own personal use subjected to restrictions set in these terms and conditions.</p>
+
+            <p>You must not:</p>
+            <ul>
+                <li>Republish material from Candy Rain</li>
+                <li>Sell, rent, or sub-license material from Candy Rain</li>
+                <li>Reproduce, duplicate, or copy material from Candy Rain</li>
+                <li>Redistribute content from Candy Rain</li>
+            </ul>
+
+            <p>This Agreement shall begin on the date hereof.</p>
+        </div>
+
+        <!-- User Comments Section -->
+        <div class="terms-section">
+            <h2 class="section-title">User Comments</h2>
+            <p>Parts of this website offer an opportunity for users to post and exchange opinions and information in certain areas of the website. Candy Rain does not filter, edit, publish, or review Comments prior to their presence on the website. Comments do not reflect the views and opinions of Candy Rain, its agents, and/or affiliates. Comments reflect the views and opinions of the person who posts their views and opinions.</p>
+
+            <div class="highlight-block">
+                <p>To the extent permitted by applicable laws, Candy Rain shall not be liable for the Comments or for any liability, damages, or expenses caused and/or suffered as a result of any use of and/or posting of and/or appearance of the Comments on this website.</p>
+            </div>
+
+            <p>Candy Rain reserves the right to monitor all Comments and to remove any Comments that can be considered inappropriate, offensive, or cause a breach of these Terms and Conditions.</p>
+        </div>
+        <!-- User Warranty Section -->
+        <div class="terms-section">
+            <h2 class="section-title">User Warranties</h2>
+            <p>You warrant and represent that:</p>
+            <ul>
+                <li>You are entitled to post the Comments on our website and have all necessary licenses and consents to do so;</li>
+                <li>The Comments do not invade any intellectual property right, including without limitation copyright, patent, or trademark of any third party;</li>
+                <li>The Comments do not contain any defamatory, libelous, offensive, indecent, or otherwise unlawful material which is an invasion of privacy;</li>
+                <li>The Comments will not be used to solicit or promote business or custom or present commercial activities or unlawful activity.</li>
+            </ul>
+
+            <div class="terms-box">
+                <p>You hereby grant Candy Rain a non-exclusive license to use, reproduce, edit, and authorize others to use, reproduce, and edit any of your Comments in any and all forms, formats, or media.</p>
+            </div>
+        </div>
+
+        <!-- Hyperlinking Section -->
+        <div class="terms-section">
+            <h2 class="section-title">Hyperlinking to Our Content</h2>
+            <p>The following organizations may link to our Website without prior written approval:</p>
+            <ul>
+                <li>Government agencies</li>
+                <li>Search engines</li>
+                <li>News organizations</li>
+                <li>Online directory distributors may link to our Website in the same manner as they hyperlink to the Websites of other listed businesses</li>
+                <li>System-wide Accredited Businesses except soliciting non-profit organizations, charity shopping malls, and charity fundraising groups which may not hyperlink to our Website</li>
+            </ul>
+        </div>
+
+        <!-- iFrames Section -->
+        <div class="terms-section">
+            <h2 class="section-title">iFrames</h2>
+            <div class="highlight-block">
+                <p>Without prior approval and written permission, you may not create frames around our webpages that alter in any way the visual presentation or appearance of our Website.</p>
+            </div>
+        </div>
+
+        <!-- Content Liability Section -->
+        <div class="terms-section">
+            <h2 class="section-title">Content Liability</h2>
+            <p>We shall not be held responsible for any content that appears on your website. You agree to protect and defend us against all claims that are rising on your website. No link(s) should appear on any website that may be interpreted as libelous, obscene, or criminal, or which infringes, otherwise violates, or advocates the infringement or other violation of, any third-party rights.</p>
+        </div>
+        <!-- Reservation of Rights Section -->
+        <div class="terms-section">
+            <h2 class="section-title">Reservation of Rights</h2>
+            <p>We reserve the right to request that you remove all links or any particular link to our Website. You approve to immediately remove all links to our Website upon request. We also reserve the right to amend these terms and conditions and its linking policy at any time. By continuously linking to our Website, you agree to be bound to and follow these linking terms and conditions.</p>
+        </div>
+
+        <!-- Removal of Links Section -->
+        <div class="terms-section">
+            <h2 class="section-title">Removal of Links from Our Website</h2>
+            <p>If you find any link on our Website that is offensive for any reason, you are free to contact and inform us at any moment. We will consider requests to remove links, but we are not obligated to do so or to respond to you directly.</p>
+            <div class="terms-box">
+                <p>For any concerns regarding links on our website, please contact us through our official support channels.</p>
+            </div>
+        </div>
+
+        <!-- Disclaimer Section -->
+        <div class="terms-section">
+            <h2 class="section-title">Disclaimer</h2>
+            <p>To the maximum extent permitted by applicable law, we exclude all representations, warranties, and conditions relating to our website and the use of this website. Nothing in this disclaimer will:</p>
+            <ul>
+                <li>Limit or exclude our or your liability for death or personal injury</li>
+                <li>Limit or exclude our or your liability for fraud or fraudulent misrepresentation</li>
+                <li>Limit any of our or your liabilities in any way that is not permitted under applicable law</li>
+                <li>Exclude any of our or your liabilities that may not be excluded under applicable law</li>
+            </ul>
+
+            <div class="highlight-block">
+                <p>By using our website, you hereby consent to our Terms and Conditions.</p>
+            </div>
+        </div>
+
+        <!-- Updates and Changes Section -->
+        <div class="terms-section">
+            <h2 class="section-title">Updates to Terms and Conditions</h2>
+            <p>We may update our Terms and Conditions from time to time. We will notify you of any changes by posting the new Terms and Conditions on this page and updating the "Last Updated" date.</p>
+            <p>You are advised to review these Terms and Conditions periodically for any changes. Changes to these Terms and Conditions are effective when they are posted on this page.</p>
+            <div class="terms-box">
+                <p><strong>Last Updated:</strong> March 15, 2025</p>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="terms-section">
+            <h2 class="section-title">Contact Us</h2>
+            <p>If you have any questions about these Terms and Conditions, please don't hesitate to reach out to us.</p>
+            <div class="highlight-block">
+                <p>For inquiries related to our Terms and Conditions, you can contact our Legal Department by email at: <strong>legal@candyrain-play.com</strong></p>
+            </div>
+            <p>We strive to address all concerns promptly and will respond to your inquiry as soon as possible.</p>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-links">
+                <a href="/Policy356/" class="footer-link">Privacy Policy</a>
+                <a href="/Service347/" class="footer-link">Terms of Service</a>
+                <a href="/Cookie992/" class="footer-link">Cookie Policy</a>
+
+            </div>
+            <p class="copyright">© 2025 Candy Rain. All Rights Reserved. Candy Rain is a trademark of Candy Rain Games.</p>
+        </div>
+    </footer>
+
+
+    <?php include '../cookie-consent.php'; ?>
+</body>
+
+</html>
